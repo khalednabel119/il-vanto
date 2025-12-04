@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | il vanto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="index.html" class="logo">il vanto</a>
+    </div>
+    <div class="language-switcher">
+    <button class="language-btn">
+         <!-- أو استخدم أيقونة ترجمة -->
+        <span>🌐</span>
+        <i class="dropdown-arrow">▼</i>
+    </button>
+    <div class="language-dropdown">
+        <a href="#" data-lang="en">English</a>
+        <a href="#" data-lang="ar">العربية</a>
+        <a href="#" data-lang="zh">中文</a>
+    </div>
+</div>
+</header>
+
+<div class="auth-container">
+    <h2 id="form-title">Sign In</h2>
+
+    <form id="login-form">
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="loginEmail" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="loginPass" required>
+        </div>
+        <button type="submit" class="btn btn-block">Sign In</button>
+    </form>
+
+    <form id="register-form" style="display: none;">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="regName" required>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="regEmail" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="regPass" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-block">Create Account</button>
+    </form>
+
+    <p id="toggle-auth" class="switch-auth">Don't have an account? Register</p>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+    // ================================
+// AUTH PAGE TRANSLATION SYSTEM
+// ================================
+
+const authTranslations = {
+    en: {
+        // Header
+        logo: "il vanto",
+        
+        // Form Titles
+        signin_title: "Sign In",
+        register_title: "Create Account",
+        
+        // Labels
+        label_email: "Email Address",
+        label_password: "Password",
+        label_name: "Full Name",
+        
+        // Buttons
+        btn_signin: "Sign In",
+        btn_register: "Create Account",
+        
+        // Links
+        toggle_register: "Don't have an account? Register",
+        toggle_signin: "Already have an account? Sign In",
+        
+        // Validation Messages
+        password_length: "Password must be at least 6 characters",
+        email_required: "Email is required",
+        name_required: "Full name is required",
+        
+        // Success Messages
+        login_success: "Login successful!",
+        register_success: "Account created successfully!",
+        
+        // Error Messages
+        login_error: "Invalid email or password",
+        register_error: "Email already registered"
+    },
+    
+    ar: {
+        // Header
+        logo: "il vanto",
+        
+        // Form Titles
+        signin_title: "تسجيل الدخول",
+        register_title: "إنشاء حساب",
+        
+        // Labels
+        label_email: "البريد الإلكتروني",
+        label_password: "كلمة المرور",
+        label_name: "الاسم الكامل",
+        
+        // Buttons
+        btn_signin: "تسجيل الدخول",
+        btn_register: "إنشاء حساب",
+        
+        // Links
+        toggle_register: "ليس لديك حساب؟ سجل الآن",
+        toggle_signin: "لديك حساب بالفعل؟ سجل الدخول",
+        
+        // Validation Messages
+        password_length: "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+        email_required: "البريد الإلكتروني مطلوب",
+        name_required: "الاسم الكامل مطلوب",
+        
+        // Success Messages
+        login_success: "تم تسجيل الدخول بنجاح!",
+        register_success: "تم إنشاء الحساب بنجاح!",
+        
+        // Error Messages
+        login_error: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        register_error: "البريد الإلكتروني مسجل بالفعل"
+    },
+    
+    zh: {
+        // Header
+        logo: "il vanto",
+        
+        // Form Titles
+        signin_title: "登录",
+        register_title: "创建账户",
+        
+        // Labels
+        label_email: "电子邮件地址",
+        label_password: "密码",
+        label_name: "全名",
+        
+        // Buttons
+        btn_signin: "登录",
+        btn_register: "创建账户",
+        
+        // Links
+        toggle_register: "没有账户？注册",
+        toggle_signin: "已有账户？登录",
+        
+        // Validation Messages
+        password_length: "密码至少6个字符",
+        email_required: "电子邮件必填",
+        name_required: "全名必填",
+        
+        // Success Messages
+        login_success: "登录成功！",
+        register_success: "账户创建成功！",
+        
+        // Error Messages
+        login_error: "电子邮件或密码无效",
+        register_error: "电子邮件已注册"
+    }
+};
+
+// Apply translation to the auth page
+function applyAuthTranslation(lang) {
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+    
+    // Save selected language
+    localStorage.setItem('auth-lang', lang);
+    
+    // Update language button
+    updateAuthLanguageButton(lang);
+    
+    // Get translation object
+    const t = authTranslations[lang] || authTranslations.en;
+    
+    // Apply translations to elements with data-translate attribute
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (t[key]) {
+            element.textContent = t[key];
+        }
+    });
+    
+    // Apply translations to labels and placeholders
+    const elements = {
+        '#form-title': t.signin_title,
+        '.logo': t.logo,
+        'input[name="loginEmail"]': { placeholder: t.label_email },
+        'input[name="loginPass"]': { placeholder: t.label_password },
+        'input[name="regName"]': { placeholder: t.label_name },
+        'input[name="regEmail"]': { placeholder: t.label_email },
+        'input[name="regPass"]': { placeholder: t.label_password },
+        '#login-form button': t.btn_signin,
+        '#register-form button': t.btn_register,
+        '#toggle-auth': t.toggle_register
+    };
+    
+    // Apply to elements
+    Object.keys(elements).forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            if (typeof elements[selector] === 'string') {
+                element.textContent = elements[selector];
+            } else {
+                Object.keys(elements[selector]).forEach(attr => {
+                    element[attr] = elements[selector][attr];
+                });
+            }
+        }
+    });
+    
+    // Apply to labels
+    const labels = document.querySelectorAll('.form-group label');
+    labels.forEach((label, index) => {
+        const input = label.nextElementSibling;
+        if (input) {
+            const inputName = input.getAttribute('name');
+            switch(inputName) {
+                case 'loginEmail':
+                case 'regEmail':
+                    label.textContent = t.label_email;
+                    break;
+                case 'loginPass':
+                case 'regPass':
+                    label.textContent = t.label_password;
+                    break;
+                case 'regName':
+                    label.textContent = t.label_name;
+                    break;
+            }
+        }
+    });
+    
+    // Apply RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+        
+        // Keep header LTR
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.direction = 'ltr';
+            header.style.textAlign = 'left';
+        }
+        
+        // Align form elements for RTL
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            group.style.textAlign = 'right';
+        });
+        
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.style.textAlign = 'right';
+        });
+        
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.style.textAlign = 'center';
+        });
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+        
+        // Reset styles for other languages
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            group.style.textAlign = '';
+        });
+        
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.style.textAlign = '';
+        });
+    }
+    
+    // Update form title based on current form
+    updateFormTitle();
+}
+
+// Update language button text
+function updateAuthLanguageButton(lang) {
+    const button = document.querySelector('.language-btn span');
+    const langTexts = {
+        en: '🌐 EN',
+        ar: '🌐 عربي',
+        zh: '🌐 中文'
+    };
+    
+    if (button && langTexts[lang]) {
+        button.textContent = langTexts[lang];
+    }
+}
+
+// Update form title when toggling
+function updateFormTitle() {
+    const formTitle = document.getElementById('form-title');
+    const loginForm = document.getElementById('login-form');
+    const currentLang = localStorage.getItem('auth-lang') || 'en';
+    const t = authTranslations[currentLang] || authTranslations.en;
+    
+    if (loginForm.style.display === 'none') {
+        formTitle.textContent = t.register_title;
+    } else {
+        formTitle.textContent = t.signin_title;
+    }
+}
+
+// Initialize auth translation system
+function initAuthTranslation() {
+    // Add data-translate attributes if needed
+    const elementsToTranslate = {
+        '.logo': 'logo',
+        '#form-title': 'signin_title',
+        '#toggle-auth': 'toggle_register'
+    };
+    
+    Object.keys(elementsToTranslate).forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element && !element.hasAttribute('data-translate')) {
+            element.setAttribute('data-translate', elementsToTranslate[selector]);
+        }
+    });
+    
+    // Set up language switcher events
+    const langLinks = document.querySelectorAll('.language-dropdown a');
+    langLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const lang = link.getAttribute('data-lang');
+            applyAuthTranslation(lang);
+            
+            // Close dropdown
+            document.querySelector('.language-dropdown').classList.remove('show');
+        });
+    });
+    
+    // Language button click event
+    const languageBtn = document.querySelector('.language-btn');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    
+    if (languageBtn) {
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            languageDropdown.classList.remove('show');
+        });
+        
+        // Prevent closing when clicking inside dropdown
+        languageDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // Update toggle link when switching forms
+    const toggleLink = document.getElementById('toggle-auth');
+    if (toggleLink) {
+        toggleLink.addEventListener('click', () => {
+            // This will be handled by your existing script
+            // We just need to update the translation after toggle
+            setTimeout(() => {
+                const currentLang = localStorage.getItem('auth-lang') || 'en';
+                const t = authTranslations[currentLang] || authTranslations.en;
+                
+                if (document.getElementById('login-form').style.display === 'none') {
+                    toggleLink.textContent = t.toggle_signin;
+                } else {
+                    toggleLink.textContent = t.toggle_register;
+                }
+                
+                updateFormTitle();
+            }, 50);
+        });
+    }
+    
+    // Load saved language or default to English
+    const savedLang = localStorage.getItem('auth-lang') || 
+                     localStorage.getItem('site-lang') || 
+                     'en';
+    applyAuthTranslation(savedLang);
+    
+    // Monitor form changes for translation updates
+    observeFormChanges();
+}
+
+// Observe form changes to update translations
+function observeFormChanges() {
+    // Create a mutation observer to watch for form visibility changes
+    const observer = new MutationObserver(() => {
+        updateFormTitle();
+        
+        // Update toggle link text
+        const toggleLink = document.getElementById('toggle-auth');
+        if (toggleLink) {
+            const currentLang = localStorage.getItem('auth-lang') || 'en';
+            const t = authTranslations[currentLang] || authTranslations.en;
+            
+            if (document.getElementById('login-form').style.display === 'none') {
+                toggleLink.textContent = t.toggle_signin;
+            } else {
+                toggleLink.textContent = t.toggle_register;
+            }
+        }
+    });
+    
+    // Observe form display changes
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    
+    if (loginForm) {
+        observer.observe(loginForm, { attributes: true, attributeFilter: ['style'] });
+    }
+    
+    if (registerForm) {
+        observer.observe(registerForm, { attributes: true, attributeFilter: ['style'] });
+    }
+}
+
+// Show toast message with translation
+function showTranslatedToast(messageKey, type = 'success') {
+    const currentLang = localStorage.getItem('auth-lang') || 'en';
+    const t = authTranslations[currentLang] || authTranslations.en;
+    const message = t[messageKey] || messageKey;
+    
+    // Use your existing toast function or create a simple one
+    const toastContainer = document.getElementById('toast-container');
+    if (toastContainer) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initAuthTranslation);
+
+// If you have existing form validation, you can integrate translation
+function validateFormWithTranslation(formData, isRegister = false) {
+    const currentLang = localStorage.getItem('auth-lang') || 'en';
+    const t = authTranslations[currentLang] || authTranslations.en;
+    
+    // Email validation
+    if (!formData.email) {
+        showTranslatedToast('email_required', 'error');
+        return false;
+    }
+    
+    // Password validation
+    if (!formData.password || formData.password.length < 6) {
+        showTranslatedToast('password_length', 'error');
+        return false;
+    }
+    
+    // Name validation for registration
+    if (isRegister && !formData.name) {
+        showTranslatedToast('name_required', 'error');
+        return false;
+    }
+    
+    return true;
+}
+</script>
+
+</body>
+</html>

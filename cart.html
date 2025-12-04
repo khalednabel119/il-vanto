@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | il vanto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="index.html" class="logo" data-translate="logo">il vanto</a>
+        <nav class="nav-links">
+            <a href="index.html" data-translate="nav_home">Home</a>
+            <a href="cart.html" data-translate="nav_cart">Cart</a>
+            <a href="tracking.html" data-translate="nav_tracking">Tracking</a>
+            <div class="language-switcher">
+                <button class="language-btn" id="languageBtn">
+                    <span>🌐 EN</span>
+                    <i class="dropdown-arrow">▼</i>
+                </button>
+                <div class="language-dropdown" id="languageDropdown">
+                    <a href="#" data-lang="en">English</a>
+                    <a href="#" data-lang="ar">العربية</a>
+                    <a href="#" data-lang="zh">中文</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="cart-container">
+    <h1 data-translate="cart_title">Shopping Cart</h1>
+    <div id="cart-items"></div>
+
+    <div class="cart-summary">
+        <div class="summary-row">
+            <span data-translate="subtotal">Subtotal</span>
+            <span id="subtotal">$0.00</span>
+        </div>
+        <div class="summary-row">
+            <span data-translate="shipping">Shipping</span>
+            <span>$15.00</span>
+        </div>
+        <div class="summary-row total-row">
+            <span data-translate="order_total">Total</span>
+            <span id="total">$0.00</span>
+        </div>
+        <button id="checkout-btn" class="btn btn-block" data-translate="checkout">Checkout</button>
+    </div>
+</main>
+
+<div id="toast-container"></div>
+
+<script>
+// ================================
+// SIMPLE TRANSLATION ONLY - FIXED DROPDOWN
+// ================================
+
+const translations = {
+    en: {
+        logo: "il vanto",
+        nav_home: "Home",
+        nav_cart: "Cart",
+        nav_tracking: "Tracking",
+        cart_title: "Shopping Cart",
+        subtotal: "Subtotal",
+        shipping: "Shipping",
+        order_total: "Total",
+        checkout: "Checkout"
+    },
+    ar: {
+        logo: "il vanto",
+        nav_home: "الرئيسية",
+        nav_cart: "عربة التسوق",
+        nav_tracking: "تتبع الطلب",
+        cart_title: "عربة التسوق",
+        subtotal: "المجموع الجزئي",
+        shipping: "الشحن",
+        order_total: "الإجمالي",
+        checkout: "إتمام الشراء"
+    },
+    zh: {
+        logo: "il vanto",
+        nav_home: "首页",
+        nav_cart: "购物车",
+        nav_tracking: "订单跟踪",
+        cart_title: "购物车",
+        subtotal: "小计",
+        shipping: "运费",
+        order_total: "总计",
+        checkout: "结账"
+    }
+};
+
+function applyTranslation(lang) {
+    const t = translations[lang] || translations.en;
+    
+    // Update all elements with data-translate
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Update language button text
+    const langText = document.querySelector('.language-btn span');
+    const langTexts = {
+        en: '🌐 EN',
+        ar: '🌐 عربي',
+        zh: '🌐 中文'
+    };
+    
+    if (langText && langTexts[lang]) {
+        langText.textContent = langTexts[lang];
+    }
+    
+    // Apply RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+    }
+    
+    // Save selected language
+    localStorage.setItem('preferred-language', lang);
+}
+
+// Toggle dropdown visibility
+function toggleLanguageDropdown() {
+    const dropdown = document.getElementById('languageDropdown');
+    const btn = document.getElementById('languageBtn');
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        btn.classList.remove('active');
+    } else {
+        dropdown.classList.add('show');
+        btn.classList.add('active');
+    }
+}
+
+// Close dropdown when clicking outside
+function closeDropdownOnClickOutside(event) {
+    const dropdown = document.getElementById('languageDropdown');
+    const btn = document.getElementById('languageBtn');
+    
+    if (!dropdown.contains(event.target) && !btn.contains(event.target)) {
+        dropdown.classList.remove('show');
+        btn.classList.remove('active');
+    }
+}
+
+// Initialize language system
+function initLanguageSystem() {
+    // Get elements
+    const languageBtn = document.getElementById('languageBtn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const langLinks = document.querySelectorAll('.language-dropdown a');
+    
+    // Add click event to language button
+    if (languageBtn) {
+        languageBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleLanguageDropdown();
+        });
+    }
+    
+    // Add click events to language links
+    langLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const lang = this.getAttribute('data-lang');
+            applyTranslation(lang);
+            
+            // Close dropdown after selection
+            languageDropdown.classList.remove('show');
+            languageBtn.classList.remove('active');
+        });
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', closeDropdownOnClickOutside);
+    
+    // Prevent dropdown from closing when clicking inside it
+    if (languageDropdown) {
+        languageDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Load saved language or default to English
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    applyTranslation(savedLang);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initLanguageSystem);
+</script>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

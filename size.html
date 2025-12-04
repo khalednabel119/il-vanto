@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find My Perfect Size</title>
+
+    <!-- Main site theme -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Size page theme (gold + black) -->
+    <link rel="stylesheet" href="size.css">
+</head>
+
+<body>
+
+    <!-- TOAST MESSAGE -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher" style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <button class="language-btn" style="background: #333; border: 1px solid #555; color: white; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+            <span data-translate="current_lang">🌐 EN</span>
+            <i>▼</i>
+        </button>
+        <div class="language-dropdown" style="display: none; position: absolute; top: 100%; right: 0; background: #222; border: 1px solid #555; border-radius: 4px; min-width: 120px;">
+            <a href="#" data-lang="en">English</a>
+            <a href="#" data-lang="ar">العربية</a>
+            <a href="#" data-lang="zh">中文</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 data-translate="page_title">Find My Perfect Size</h1>
+            <p class="subtitle" data-translate="page_subtitle">Get personalized size recommendations in seconds</p>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form id="sizeForm">
+
+            <!-- STEP 1 -->
+            <div class="form-section active" id="step1">
+                <h2 data-translate="step1_title">Basic Information</h2>
+
+                <div class="input-group">
+                    <label for="age" data-translate="age_label">Age</label>
+                    <input type="number" id="age" min="13" max="100" required data-translate-placeholder="age_placeholder">
+                </div>
+
+                <div class="input-group">
+                    <label for="height" data-translate="height_label">Height (cm)</label>
+                    <input type="number" id="height" min="140" max="220" required data-translate-placeholder="height_placeholder">
+                </div>
+
+                <div class="input-group">
+                    <label for="weight" data-translate="weight_label">Weight (kg)</label>
+                    <input type="number" id="weight" min="30" max="200" required data-translate-placeholder="weight_placeholder">
+                </div>
+
+                <button type="button" class="btn btn-block" onclick="nextStep(1)" data-translate="next_btn">
+                    Next
+                </button>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="form-section" id="step2">
+                <h2 data-translate="step2_title">Select Your Gender</h2>
+
+                <div class="gender-options">
+                    <div class="gender-card" onclick="selectGender('male', this)">
+                        <div class="gender-icon">♂</div>
+                        <p data-translate="gender_male">Male</p>
+                    </div>
+
+                    <div class="gender-card" onclick="selectGender('female', this)">
+                        <div class="gender-icon">♀</div>
+                        <p data-translate="gender_female">Female</p>
+                    </div>
+                </div>
+
+                <input type="hidden" id="gender" required>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline btn-block" onclick="prevStep(2)" data-translate="back_btn">
+                        Back
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="form-section" id="step3">
+                <h2 data-translate="step3_title">Select Your Body Shape</h2>
+
+                <div class="body-shape-container">
+                    <p class="shape-guide-text" data-translate="shape_guide">
+                        Which body type best characterizes your shape?
+                    </p>
+
+                    <div class="shape-options-list" id="shapeOptionsList"></div>
+                </div>
+
+                <input type="hidden" id="bodyShape" required>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline" onclick="prevStep(3)" data-translate="back_btn">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-block" onclick="calculateSize()" data-translate="get_size_btn">
+                        Get My Size
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="form-section" id="step4">
+                <div class="result-container">
+                    <div class="result-icon">✓</div>
+
+                    <h2 data-translate="result_title">Your Perfect Size</h2>
+
+                    <div class="size-result" id="sizeResult"></div>
+                    <p class="result-explanation" id="resultExplanation"></p>
+
+                   <button type="button" class="btn btn-outline btn-block" onclick="window.location.href='/index.html';" data-translate="start_over_btn">
+                        Start Over
+                    </button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+// ================================
+// SIZE PAGE TRANSLATION ONLY
+// ================================
+
+const sizeTranslations = {
+    en: {
+        page_title: "Find My Perfect Size",
+        page_subtitle: "Get personalized size recommendations in seconds",
+        step1_title: "Basic Information",
+        age_label: "Age",
+        age_placeholder: "Enter age",
+        height_label: "Height (cm)",
+        height_placeholder: "Enter height",
+        weight_label: "Weight (kg)",
+        weight_placeholder: "Enter weight",
+        next_btn: "Next",
+        step2_title: "Select Your Gender",
+        gender_male: "Male",
+        gender_female: "Female",
+        back_btn: "Back",
+        step3_title: "Select Your Body Shape",
+        shape_guide: "Which body type best characterizes your shape?",
+        get_size_btn: "Get My Size",
+        result_title: "Your Perfect Size",
+        start_over_btn: "Start Over",
+        shape_rectangle: "Rectangle",
+        shape_triangle: "Triangle",
+        shape_inverted: "Inverted Triangle",
+        shape_oval: "Oval",
+        shape_hourglass: "Hourglass",
+        current_lang: "🌐 EN"
+    },
+    ar: {
+        page_title: "ابحث عن مقاسي المثالي",
+        page_subtitle: "احصل على توصيات مقاسات مخصصة خلال ثوانٍ",
+        step1_title: "المعلومات الأساسية",
+        age_label: "العمر",
+        age_placeholder: "أدخل العمر",
+        height_label: "الطول (سم)",
+        height_placeholder: "أدخل الطول",
+        weight_label: "الوزن (كجم)",
+        weight_placeholder: "أدخل الوزن",
+        next_btn: "التالي",
+        step2_title: "اختر جنسك",
+        gender_male: "ذكر",
+        gender_female: "أنثى",
+        back_btn: "رجوع",
+        step3_title: "اختر شكل جسمك",
+        shape_guide: "أي نوع جسم يمثل شكل جسمك بشكل أفضل؟",
+        get_size_btn: "احصل على مقاسي",
+        result_title: "مقاسك المثالي",
+        start_over_btn: "ابدأ من جديد",
+        shape_rectangle: "مستطيل",
+        shape_triangle: "مثلث",
+        shape_inverted: "مثلث مقلوب",
+        shape_oval: "بيضاوي",
+        shape_hourglass: "ساعة رملية",
+        current_lang: "🌐 عربي"
+    },
+    zh: {
+        page_title: "找到我的完美尺码",
+        page_subtitle: "几秒钟内获得个性化尺码推荐",
+        step1_title: "基本信息",
+        age_label: "年龄",
+        age_placeholder: "输入年龄",
+        height_label: "身高 (厘米)",
+        height_placeholder: "输入身高",
+        weight_label: "体重 (公斤)",
+        weight_placeholder: "输入体重",
+        next_btn: "下一步",
+        step2_title: "选择您的性别",
+        gender_male: "男性",
+        gender_female: "女性",
+        back_btn: "返回",
+        step3_title: "选择您的体型",
+        shape_guide: "哪种体型最能描述您的身材？",
+        get_size_btn: "获取我的尺码",
+        result_title: "您的完美尺码",
+        start_over_btn: "重新开始",
+        shape_rectangle: "矩形",
+        shape_triangle: "三角形",
+        shape_inverted: "倒三角形",
+        shape_oval: "椭圆形",
+        shape_hourglass: "沙漏形",
+        current_lang: "🌐 中文"
+    }
+};
+
+function applySizeTranslation(lang) {
+    const t = sizeTranslations[lang] || sizeTranslations.en;
+    
+    // Translate elements
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Translate placeholders
+    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-translate-placeholder');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+    
+    // Update body shapes if they exist
+    updateBodyShapesTranslation(t);
+    
+    // Update language button
+    const button = document.querySelector('.language-btn span');
+    if (button && t.current_lang) {
+        button.textContent = t.current_lang;
+    }
+    
+    // RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+    }
+}
+
+function updateBodyShapesTranslation(t) {
+    const shapeOptions = document.querySelectorAll('.shape-option');
+    shapeOptions.forEach(option => {
+        const type = option.getAttribute('data-shape');
+        const title = option.querySelector('h3');
+        const desc = option.querySelector('p');
+        
+        if (title && t[`shape_${type}`]) {
+            title.textContent = t[`shape_${type}`];
+        }
+    });
+}
+
+// Language switcher
+document.addEventListener('DOMContentLoaded', function() {
+    // Language dropdown toggle
+    const languageBtn = document.querySelector('.language-btn');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    
+    if (languageBtn) {
+        languageBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.style.display = languageDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close dropdown on outside click
+        document.addEventListener('click', function() {
+            languageDropdown.style.display = 'none';
+        });
+        
+        languageDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Language selection
+    document.querySelectorAll('.language-dropdown a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            applySizeTranslation(lang);
+            languageDropdown.style.display = 'none';
+        });
+    });
+    
+    // Load saved language
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    applySizeTranslation(savedLang);
+});
+    </script>
+
+    <script src="size.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+/* ---------------------------------------------------
+   PREMIUM GOLD + BLACK SIZE FINDER DESIGN
+--------------------------------------------------- */
+
+:root {
+    /* New Color Palette */
+    --gold: #2C365A; /* Deep Ocean بدل الجولد */
+    --gold-light: rgba(44, 54, 90, 0.25); 
+    --gold-hover: #233054;
+
+    --bg: #EEE8DF;         /* Cream */
+    --surface: #C4BCB0;    /* Beige */
+    --text: #2C365A;       /* Deep Ocean */
+    --text-dim: rgba(44, 54, 90, 0.7);
+
+    /* UI */
+    --radius: 14px;
+    --transition: 0.35s ease;
+    --shadow: 0 0 25px rgba(44, 54, 90, 0.12);
+}
+
+
+/* MAIN CONTAINER */
+body {
+    background: var(--bg);
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 550px;
+    background: var(--surface);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow-y: auto;
+    max-height: 90vh;
+    animation: fadeIn 0.7s ease;
+}
+
+/* HEADER */
+header h1 {
+    font-family: "Playfair Display";
+    color: var(--gold);
+    text-align: center;
+    font-size: 2.3rem;
+}
+
+.subtitle {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #222;
+    border-radius: 6px;
+    margin: 20px 0 30px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.5s ease-out;
+}
+
+/* FORM SECTIONS */
+.form-section {
+    display: none;
+    animation: slideUp 0.5s ease;
+}
+
+.form-section.active {
+    display: block;
+}
+
+/* INPUTS */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: var(--gold);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: var(--text);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.input-group input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold-light);
+}
+
+/* BUTTONS */
+.btn {
+    background: var(--gold);
+    color: #000;
+    padding: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background: var(--gold-hover);
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+}
+
+.btn-outline:hover {
+    background: var(--gold);
+    color: #000;
+}
+
+/* GENDER SELECTION */
+.gender-options {
+    display: flex;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.gender-card {
+    flex: 1;
+    background: #1a1a1a;
+    padding: 25px;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: 1px solid #333;
+    transition: var(--transition);
+}
+
+.gender-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+}
+
+.gender-card.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 18px var(--gold-light);
+}
+
+.gender-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* BODY SHAPE OPTIONS */
+.shape-options-list {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* SMALLER BODY SHAPE ICONS */
+.shape-option-card .shape-icon {
+    width: 75px;      /* reduced icon width */
+    height: 75px;     /* reduced icon height */
+    margin: 0 auto 10px;
+}
+
+.shape-option-card svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* SHAPE CARDS */
+.shape-option-card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    padding: 18px;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.shape-option-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+}
+
+.shape-option-card.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 18px var(--gold-light);
+}
+
+/* RESULT PAGE */
+.result-container {
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 2.8rem;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.size-result {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--gold);
+    margin: 10px 0 15px;
+}
+
+/* TOAST (SAME STYLE AS AUTH) */
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: var(--gold);
+    padding: 12px 20px;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s ease, bottom .4s ease;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    bottom: 40px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

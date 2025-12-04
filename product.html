@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | il vanto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="index.html" class="logo" data-translate="logo">il vanto</a>
+        <nav class="nav-links">
+            <a href="index.html" data-translate="nav_home">Home</a>
+            <a href="cart.html" data-translate="nav_cart">Cart</a>
+            <a href="tracking.html" data-translate="nav_tracking">Tracking</a>
+            <div class="language-switcher">
+                <button class="language-btn">
+                    <span>🌐 EN</span>
+                    <i class="dropdown-arrow">▼</i>
+                </button>
+                <div class="language-dropdown">
+                    <a href="#" data-lang="en">English</a>
+                    <a href="#" data-lang="ar">العربية</a>
+                    <a href="#" data-lang="zh">中文</a>
+                </div>
+            </div>
+        </nav>
+        <div class="nav-icons">
+            <div class="cart-icon-wrapper" onclick="window.location.href='cart.html'">
+                <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.6 13.4a2 2 0 0 0 2 1.6h10a2 2 0 0 0 2-1.6L23 6H6"></path>
+                </svg>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="product-detail-container">
+    <div class="detail-image">
+        <img id="detail-img" src="" alt="Product">
+    </div>
+
+    <div class="detail-info">
+        <h1 id="detail-title"></h1>
+        <div id="detail-price" class="detail-price"></div>
+        <p id="detail-desc"></p>
+
+        <div class="detail-options">
+            <div class="option-group">
+                <label data-translate="size_label">Size</label>
+                <button class="size-btn">S</button>
+                <button class="size-btn selected">M</button>
+                <button class="size-btn">L</button>
+                <button class="size-btn">XL</button>
+            </div>
+
+            <div class="option-group">
+                <label data-translate="quantity_label">Quantity</label>
+                <input type="number" id="qty-input" value="1" min="1" max="10">
+            </div>
+
+            <label data-translate="color_label">Color:</label>
+
+            <div class="color-options">
+                <div class="color-choice" data-color="white">
+                    <div class="color-name" data-translate="color_white">White</div>
+                    <div class="color-swatch"></div>
+                </div>
+
+                <div class="color-choice" data-color="grey">
+                    <div class="color-name" data-translate="color_grey">Grey</div>
+                    <div class="color-swatch"></div>
+                </div>
+
+                <div class="color-choice selected" data-color="black">
+                    <div class="color-name" data-translate="color_black">Black</div>
+                    <div class="color-swatch"></div>
+                </div>
+            </div>
+
+            <button id="add-to-cart-btn" class="btn btn-block" data-translate="add_to_cart">Add to Cart</button>
+            <p id="detail-sku" class="sku-text"></p>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+// ================================
+// PRODUCT DETAIL TRANSLATION ONLY
+// ================================
+
+const productTranslations = {
+    en: {
+        logo: "il vanto",
+        nav_home: "Home",
+        nav_cart: "Cart",
+        nav_tracking: "Tracking",
+        size_label: "Size",
+        quantity_label: "Quantity",
+        color_label: "Color",
+        color_white: "White",
+        color_grey: "Grey",
+        color_black: "Black",
+        add_to_cart: "Add to Cart"
+    },
+    ar: {
+        logo: "il vanto",
+        nav_home: "الرئيسية",
+        nav_cart: "عربة التسوق",
+        nav_tracking: "تتبع الطلب",
+        size_label: "المقاس",
+        quantity_label: "الكمية",
+        color_label: "اللون",
+        color_white: "أبيض",
+        color_grey: "رمادي",
+        color_black: "أسود",
+        add_to_cart: "أضف إلى العربة"
+    },
+    zh: {
+        logo: "il vanto",
+        nav_home: "首页",
+        nav_cart: "购物车",
+        nav_tracking: "订单跟踪",
+        size_label: "尺码",
+        quantity_label: "数量",
+        color_label: "颜色",
+        color_white: "白色",
+        color_grey: "灰色",
+        color_black: "黑色",
+        add_to_cart: "加入购物车"
+    }
+};
+
+function applyProductTranslation(lang) {
+    const t = productTranslations[lang] || productTranslations.en;
+    
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Update language button
+    const button = document.querySelector('.language-btn span');
+    const langTexts = { en: '🌐 EN', ar: '🌐 عربي', zh: '🌐 中文' };
+    if (button && langTexts[lang]) {
+        button.textContent = langTexts[lang];
+    }
+    
+    // RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+    } else {
+        document.body.style.direction = 'ltr';
+    }
+}
+
+// Language switcher
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.language-dropdown a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            applyProductTranslation(lang);
+        });
+    });
+    
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    applyProductTranslation(savedLang);
+});
+</script>
+
+<script>
+  // Get all size buttons
+  const sizeButtons = document.querySelectorAll('.size-btn');
+
+  sizeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove 'selected' from all buttons
+      sizeButtons.forEach(btn => btn.classList.remove('selected'));
+      // Add 'selected' to the clicked button
+      button.classList.add('selected');
+    });
+  });
+</script>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

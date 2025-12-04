@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FABRIC WORLD - Discover Fabrics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fabric 2.css">
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">FABRIC WORLD</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#fabrics">Fabrics</a></li>
+            <li><a href="#sensitivity">Sensitivity</a></li>
+            <li><a href="#comparison">Compare</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+          <button type="button" class="btn-gold" onclick="window.location.href='/index.html';">
+            Shopping Now
+             </button>
+
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+        <div class="language-switcher">
+    <button class="language-btn">
+         <!-- أو استخدم أيقونة ترجمة -->
+        <span>🌐</span>
+        <i class="dropdown-arrow">▼</i>
+    </button>
+    <div class="language-dropdown">
+        <a href="#" data-lang="en">English</a>
+        <a href="#" data-lang="ar">العربية</a>
+        <a href="#" data-lang="zh">中文</a>
+    </div>
+</div>
+    </nav>
+
+    <header id="home">
+        <div class="hero-content">
+            <h1>Discover the World of Fabrics</h1>
+            <p>Explore types, properties, uses & skin-friendly options.</p>
+            <a href="#fabrics" class="cta-button">Explore Now</a>
+        </div>
+    </header>
+
+    <section id="fabrics">
+        <h2 class="section-title">The Fabric Collection</h2>
+        <p class="section-subtitle">Click "Learn More" for detailed pros, cons, and ratings.</p>
+        <div class="fabric-grid" id="fabricGrid">
+            </div>
+    </section>
+
+    <section id="sensitivity">
+        <h2 class="section-title">Skin Sensitivity & Care</h2>
+        <div class="sensitivity-container">
+            <div class="sensitivity-content">
+                <div class="info-card">
+                    <h3>⚠️ Allergy Triggers</h3>
+                    <p>Synthetic fibers like Polyester and Nylon are hydrophobic (repel water), trapping sweat and bacteria against the skin. Formaldehyde resins and dyes are also common irritants.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌿 Natural vs. Synthetic</h3>
+                    <p><strong>Natural:</strong> Breathable, porous, and biodegradable (Cotton, Silk).<br><strong>Synthetic:</strong> Durable but often traps heat and moisture (Acrylic, Polyester).</p>
+                </div>
+                <div class="info-card">
+                    <h3>✨ Tips for Sensitive Skin</h3>
+                    <ul>
+                        <li>Wash new clothes before wearing.</li>
+                        <li>Use hypoallergenic detergents.</li>
+                        <li>Stick to White/Undyed organic cotton for eczema.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="accordion-item">
+                    <button class="accordion-header">Which fabric is best for Eczema?</button>
+                    <div class="accordion-body">
+                        <p>100% Organic Cotton and Bamboo are widely considered the best options as they are breathable, soft, and lack harsh chemical treatments.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Why does Wool make me itch?</button>
+                    <div class="accordion-body">
+                        <p>Wool fibers have microscopic scales that can prick the skin. If you love wool, try Merino wool, which has much finer fibers and is less irritating.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Is "Wrinkle-Free" clothing safe?</button>
+                    <div class="accordion-body">
+                        <p>Often, wrinkle-free clothes are treated with formaldehyde-releasing resins, which can cause Contact Dermatitis in sensitive individuals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison">
+        <h2 class="section-title">Fabric Comparison</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fabric</th>
+                        <th>Breathability</th>
+                        <th>Stretch</th>
+                        <th>Softness</th>
+                        <th>Allergy Risk</th>
+                        <th>Best Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cotton</td>
+                        <td>High</td>
+                        <td>Low</td>
+                        <td>High</td>
+                        <td>Very Low</td>
+                        <td>Daily Wear</td>
+                    </tr>
+                    <tr>
+                        <td>Polyester</td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                        <td>Sportswear</td>
+                    </tr>
+                    <tr>
+                        <td>Wool</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Low/Med</td>
+                        <td>Medium</td>
+                        <td>Winter Wear</td>
+                    </tr>
+                    <tr>
+                        <td>Silk</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Very High</td>
+                        <td>Low</td>
+                        <td>Luxury</td>
+                    </tr>
+                    <tr>
+                        <td>Linen</td>
+                        <td>Very High</td>
+                        <td>None</td>
+                        <td>Medium</td>
+                        <td>Very Low</td>
+                        <td>Summer Wear</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>FABRIC WORLD</h3>
+            <p>Your guide to better clothing choices.</p>
+            <p>Contact: hello@fabricworld.com</p>
+            <div class="social-icons">
+                <a href="#">FB</a>
+                <a href="#">IG</a>
+                <a href="#">TW</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Fabric World. All Rights Reserved.
+        </div>
+    </footer>
+
+    <div id="fabricModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modalBody">
+                </div>
+        </div>
+    </div>
+
+    <script src="fabric js.js"></script>
+    <script>
+        // ================================
+// LANGUAGE TRANSLATION SYSTEM
+// ================================
+
+// Translation data for fabric page
+const fabricTranslations = {
+    en: {
+        // Navbar
+        nav_home: "Home",
+        nav_fabrics: "Fabrics",
+        nav_sensitivity: "Sensitivity",
+        nav_comparison: "Compare",
+        nav_contact: "Contact",
+        btn_shopping: "Shopping Now",
+        
+        // Hero section
+        hero_title: "Discover the World of Fabrics",
+        hero_subtitle: "Explore types, properties, uses & skin-friendly options.",
+        hero_cta: "Explore Now",
+        
+        // Fabrics section
+        fabrics_title: "The Fabric Collection",
+        fabrics_subtitle: "Click 'Learn More' for detailed pros, cons, and ratings.",
+        btn_learn_more: "Learn More",
+        
+        // Sensitivity section
+        sensitivity_title: "Skin Sensitivity & Care",
+        allergy_title: "⚠️ Allergy Triggers",
+        allergy_text: "Synthetic fibers like Polyester and Nylon are hydrophobic (repel water), trapping sweat and bacteria against the skin. Formaldehyde resins and dyes are also common irritants.",
+        natural_title: "🌿 Natural vs. Synthetic",
+        natural_text: "<strong>Natural:</strong> Breathable, porous, and biodegradable (Cotton, Silk).<br><strong>Synthetic:</strong> Durable but often traps heat and moisture (Acrylic, Polyester).",
+        tips_title: "✨ Tips for Sensitive Skin",
+        tip1: "Wash new clothes before wearing.",
+        tip2: "Use hypoallergenic detergents.",
+        tip3: "Stick to White/Undyed organic cotton for eczema.",
+        
+        // FAQ
+        faq_title: "Frequently Asked Questions",
+        faq1_q: "Which fabric is best for Eczema?",
+        faq1_a: "100% Organic Cotton and Bamboo are widely considered the best options as they are breathable, soft, and lack harsh chemical treatments.",
+        faq2_q: "Why does Wool make me itch?",
+        faq2_a: "Wool fibers have microscopic scales that can prick the skin. If you love wool, try Merino wool, which has much finer fibers and is less irritating.",
+        faq3_q: "Is 'Wrinkle-Free' clothing safe?",
+        faq3_a: "Often, wrinkle-free clothes are treated with formaldehyde-releasing resins, which can cause Contact Dermatitis in sensitive individuals.",
+        
+        // Comparison section
+        comparison_title: "Fabric Comparison",
+        fabric_col: "Fabric",
+        breathability: "Breathability",
+        stretch: "Stretch",
+        softness: "Softness",
+        allergy_risk: "Allergy Risk",
+        best_use: "Best Use",
+        cotton: "Cotton",
+        polyester: "Polyester",
+        wool: "Wool",
+        silk: "Silk",
+        linen: "Linen",
+        daily_wear: "Daily Wear",
+        sportswear: "Sportswear",
+        winter_wear: "Winter Wear",
+        luxury: "Luxury",
+        summer_wear: "Summer Wear",
+        
+        // Footer
+        footer_title: "FABRIC WORLD",
+        footer_desc: "Your guide to better clothing choices.",
+        footer_contact: "Contact: hello@fabricworld.com",
+        copyright: "© 2023 Fabric World. All Rights Reserved."
+    },
+    
+    ar: {
+        // Navbar
+        nav_home: "الرئيسية",
+        nav_fabrics: "الأقمشة",
+        nav_sensitivity: "الحساسية",
+        nav_comparison: "المقارنة",
+        nav_contact: "اتصل بنا",
+        btn_shopping: "تسوق الآن",
+        
+        // Hero section
+        hero_title: "اكتشف عالم الأقمشة",
+        hero_subtitle: "استكشف الأنواع، الخصائص، الاستخدامات والخيارات الملائمة للبشرة.",
+        hero_cta: "استكشف الآن",
+        
+        // Fabrics section
+        fabrics_title: "مجموعة الأقمشة",
+        fabrics_subtitle: "انقر على 'تعلم المزيد' للحصول على إيجابيات، سلبيات وتقييمات مفصلة.",
+        btn_learn_more: "تعلم المزيد",
+        
+        // Sensitivity section
+        sensitivity_title: "حساسية البشرة والعناية",
+        allergy_title: "⚠️ محفزات الحساسية",
+        allergy_text: "الألياف الصناعية مثل البوليستر والنايلون طاردة للماء، مما يحبس العرق والبكتيريا ضد الجلد. راتنجات الفورمالدهيد والأصباغ أيضاً من المهيجات الشائعة.",
+        natural_title: "🌿 طبيعي مقابل صناعي",
+        natural_text: "<strong>طبيعي:</strong> قابل للتنفس، مسامي، وقابل للتحلل (القطن، الحرير).<br><strong>صناعي:</strong> متين ولكنه غالباً يحبس الحرارة والرطوبة (الأكريليك، البوليستر).",
+        tips_title: "✨ نصائح للبشرة الحساسة",
+        tip1: "اغسل الملابس الجديدة قبل ارتدائها.",
+        tip2: "استخدم المنظفات المضادة للحساسية.",
+        tip3: "التزم بالقطن العضوي الأبيض/غير المصبوغ للأكزيما.",
+        
+        // FAQ
+        faq_title: "الأسئلة الشائعة",
+        faq1_q: "ما هو أفضل قماش للأكزيما؟",
+        faq1_a: "يعتبر القطن العضوي 100% والخيزران الخيارين الأفضل على نطاق واسع لأنهما قابلان للتنفس، ناعمان، وخاليان من المعالجات الكيميائية القاسية.",
+        faq2_q: "لماذا يجعلني الصوف أحك؟",
+        faq2_a: "ألياف الصوف لها حراشف مجهرية يمكنها وخز الجلد. إذا كنت تحب الصوف، جرب صوف الميرينو، الذي يحتوي على ألياف أدق وأقل إثارة للحكة.",
+        faq3_q: "هل الملابس 'المقاومة للتجعد' آمنة؟",
+        faq3_a: "غالباً ما تتم معالجة الملابس المقاومة للتجعد براتنجات تطلق الفورمالدهيد، والتي يمكن أن تسبب التهاب الجلد التماسي لدى الأفراد الحساسين.",
+        
+        // Comparison section
+        comparison_title: "مقارنة الأقمشة",
+        fabric_col: "القماش",
+        breathability: "قابلية التنفس",
+        stretch: "التمدد",
+        softness: "النعومة",
+        allergy_risk: "مخاطر الحساسية",
+        best_use: "أفضل استخدام",
+        cotton: "قطن",
+        polyester: "بوليستر",
+        wool: "صوف",
+        silk: "حرير",
+        linen: "كتان",
+        daily_wear: "ملابس يومية",
+        sportswear: "ملابس رياضية",
+        winter_wear: "ملابس شتوية",
+        luxury: "فاخرة",
+        summer_wear: "ملابس صيفية",
+        
+        // Footer
+        footer_title: "عالم الأقمشة",
+        footer_desc: "دليلك لخيارات ملابس أفضل.",
+        footer_contact: "الاتصال: hello@fabricworld.com",
+        copyright: "© 2023 عالم الأقمشة. جميع الحقوق محفوظة."
+    },
+    
+    zh: {
+        // Navbar
+        nav_home: "首页",
+        nav_fabrics: "面料",
+        nav_sensitivity: "敏感性",
+        nav_comparison: "比较",
+        nav_contact: "联系我们",
+        btn_shopping: "立即购物",
+        
+        // Hero section
+        hero_title: "探索面料世界",
+        hero_subtitle: "探索类型、特性、用途和对皮肤友好的选择。",
+        hero_cta: "立即探索",
+        
+        // Fabrics section
+        fabrics_title: "面料系列",
+        fabrics_subtitle: "点击'了解更多'获取详细的优缺点和评分。",
+        btn_learn_more: "了解更多",
+        
+        // Sensitivity section
+        sensitivity_title: "皮肤敏感性与护理",
+        allergy_title: "⚠️ 过敏触发因素",
+        allergy_text: "聚酯和尼龙等合成纤维是疏水性的（排斥水分），将汗水和细菌困在皮肤上。甲醛树脂和染料也是常见的刺激物。",
+        natural_title: "🌿 天然 vs 合成",
+        natural_text: "<strong>天然:</strong> 透气、多孔、可生物降解（棉、丝）。<br><strong>合成:</strong> 耐用但常困住热量和湿气（丙烯酸、聚酯）。",
+        tips_title: "✨ 敏感皮肤提示",
+        tip1: "穿前清洗新衣服。",
+        tip2: "使用低过敏原洗涤剂。",
+        tip3: "湿疹患者坚持使用白色/未染色的有机棉。",
+        
+        // FAQ
+        faq_title: "常见问题",
+        faq1_q: "哪种面料最适合湿疹？",
+        faq1_a: "100%有机棉和竹纤维被广泛认为是最佳选择，因为它们透气、柔软且缺乏刺激性化学处理。",
+        faq2_q: "为什么羊毛让我发痒？",
+        faq2_a: "羊毛纤维有微小的鳞片会刺激皮肤。如果你喜欢羊毛，试试美利奴羊毛，它的纤维更细，刺激性更小。",
+        faq3_q: "'免烫'服装安全吗？",
+        faq3_a: "免烫服装通常用释放甲醛的树脂处理，可能导致敏感人群接触性皮炎。",
+        
+        // Comparison section
+        comparison_title: "面料比较",
+        fabric_col: "面料",
+        breathability: "透气性",
+        stretch: "弹性",
+        softness: "柔软度",
+        allergy_risk: "过敏风险",
+        best_use: "最佳用途",
+        cotton: "棉",
+        polyester: "聚酯",
+        wool: "羊毛",
+        silk: "丝绸",
+        linen: "亚麻",
+        daily_wear: "日常穿着",
+        sportswear: "运动服",
+        winter_wear: "冬季服装",
+        luxury: "奢华",
+        summer_wear: "夏季服装",
+        
+        // Footer
+        footer_title: "面料世界",
+        footer_desc: "您选择更好服装的指南。",
+        footer_contact: "联系: hello@fabricworld.com",
+        copyright: "© 2023 面料世界。保留所有权利。"
+    }
+};
+
+// Apply translation to the page
+function applyFabricTranslation(lang) {
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+    
+    // Save selected language
+    localStorage.setItem('fabric-lang', lang);
+    
+    // Update language button
+    updateLanguageButton(lang);
+    
+    // Get translation object
+    const t = fabricTranslations[lang] || fabricTranslations.en;
+    
+    // Apply translations to elements with data-translate attribute
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (t[key]) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = t[key];
+            } else {
+                element.textContent = t[key];
+            }
+        }
+    });
+    
+    // Apply translations to elements with innerHTML
+    const htmlElements = document.querySelectorAll('[data-translate-html]');
+    htmlElements.forEach(element => {
+        const key = element.getAttribute('data-translate-html');
+        if (t[key]) {
+            element.innerHTML = t[key];
+        }
+    });
+    
+    // Apply RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+        
+        // Keep navbar LTR
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            navbar.style.direction = 'ltr';
+            navbar.style.textAlign = 'left';
+        }
+        
+        // Update table for RTL
+        const table = document.querySelector('table');
+        if (table) {
+            table.style.direction = 'ltr';
+        }
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+    }
+}
+
+// Update language button text
+function updateLanguageButton(lang) {
+    const button = document.querySelector('.language-btn span');
+    const langTexts = {
+        en: '🌐 EN',
+        ar: '🌐 عربي',
+        zh: '🌐 中文'
+    };
+    
+    if (button && langTexts[lang]) {
+        button.textContent = langTexts[lang];
+    }
+}
+
+// Initialize translation system
+function initTranslation() {
+    // Add data-translate attributes to HTML elements if not present
+    const translations = {
+        // Navbar
+        '.nav-links a[href="index.html"]': 'nav_home',
+        '.nav-links a[href="#fabrics"]': 'nav_fabrics',
+        '.nav-links a[href="#sensitivity"]': 'nav_sensitivity',
+        '.nav-links a[href="#comparison"]': 'nav_comparison',
+        '.nav-links a[href="#contact"]': 'nav_contact',
+        '.btn-gold': 'btn_shopping',
+        
+        // Hero
+        '#home h1': 'hero_title',
+        '#home p': 'hero_subtitle',
+        '.cta-button': 'hero_cta',
+        
+        // Fabrics
+        '#fabrics .section-title': 'fabrics_title',
+        '#fabrics .section-subtitle': 'fabrics_subtitle',
+        
+        // Sensitivity
+        '#sensitivity .section-title': 'sensitivity_title',
+        '.info-card:nth-child(1) h3': 'allergy_title',
+        '.info-card:nth-child(2) h3': 'natural_title',
+        '.info-card:nth-child(3) h3': 'tips_title',
+        '.faq-section h3': 'faq_title',
+        '.accordion-item:nth-child(1) .accordion-header': 'faq1_q',
+        '.accordion-item:nth-child(2) .accordion-header': 'faq2_q',
+        '.accordion-item:nth-child(3) .accordion-header': 'faq3_q',
+        
+        // Comparison
+        '#comparison .section-title': 'comparison_title',
+        
+        // Footer
+        '#contact h3': 'footer_title',
+        '#contact p:nth-of-type(1)': 'footer_desc',
+        '#contact p:nth-of-type(2)': 'footer_contact',
+        '.copyright': 'copyright'
+    };
+    
+    // Add data-translate attributes dynamically
+    Object.keys(translations).forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.setAttribute('data-translate', translations[selector]);
+        }
+    });
+    
+    // Add data-translate-html for elements with HTML content
+    const htmlTranslations = {
+        '.info-card:nth-child(1) p': 'allergy_text',
+        '.info-card:nth-child(2) p': 'natural_text',
+        '.accordion-item:nth-child(1) .accordion-body p': 'faq1_a',
+        '.accordion-item:nth-child(2) .accordion-body p': 'faq2_a',
+        '.accordion-item:nth-child(3) .accordion-body p': 'faq3_a'
+    };
+    
+    Object.keys(htmlTranslations).forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.setAttribute('data-translate-html', htmlTranslations[selector]);
+        }
+    });
+    
+    // Add data-translate to list items
+    const tipItems = document.querySelectorAll('.info-card:nth-child(3) li');
+    if (tipItems.length >= 3) {
+        tipItems[0].setAttribute('data-translate', 'tip1');
+        tipItems[1].setAttribute('data-translate', 'tip2');
+        tipItems[2].setAttribute('data-translate', 'tip3');
+    }
+    
+    // Add data-translate to table headers
+    const tableHeaders = document.querySelectorAll('table thead th');
+    if (tableHeaders.length >= 6) {
+        tableHeaders[0].setAttribute('data-translate', 'fabric_col');
+        tableHeaders[1].setAttribute('data-translate', 'breathability');
+        tableHeaders[2].setAttribute('data-translate', 'stretch');
+        tableHeaders[3].setAttribute('data-translate', 'softness');
+        tableHeaders[4].setAttribute('data-translate', 'allergy_risk');
+        tableHeaders[5].setAttribute('data-translate', 'best_use');
+    }
+    
+    // Add data-translate to table body first column
+    const fabricCells = document.querySelectorAll('table tbody td:first-child');
+    if (fabricCells.length >= 5) {
+        fabricCells[0].setAttribute('data-translate', 'cotton');
+        fabricCells[1].setAttribute('data-translate', 'polyester');
+        fabricCells[2].setAttribute('data-translate', 'wool');
+        fabricCells[3].setAttribute('data-translate', 'silk');
+        fabricCells[4].setAttribute('data-translate', 'linen');
+    }
+    
+    // Add data-translate to "Best Use" column
+    const bestUseCells = document.querySelectorAll('table tbody td:nth-child(6)');
+    if (bestUseCells.length >= 5) {
+        bestUseCells[0].setAttribute('data-translate', 'daily_wear');
+        bestUseCells[1].setAttribute('data-translate', 'sportswear');
+        bestUseCells[2].setAttribute('data-translate', 'winter_wear');
+        bestUseCells[3].setAttribute('data-translate', 'luxury');
+        bestUseCells[4].setAttribute('data-translate', 'summer_wear');
+    }
+    
+    // Set up language switcher events
+    const langLinks = document.querySelectorAll('.language-dropdown a');
+    langLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const lang = link.getAttribute('data-lang');
+            applyFabricTranslation(lang);
+            
+            // Close dropdown
+            document.querySelector('.language-dropdown').classList.remove('show');
+        });
+    });
+    
+    // Language button click event
+    const languageBtn = document.querySelector('.language-btn');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    
+    if (languageBtn) {
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            languageDropdown.classList.remove('show');
+        });
+        
+        // Prevent closing when clicking inside dropdown
+        languageDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // Load saved language or default to English
+    const savedLang = localStorage.getItem('fabric-lang') || 'en';
+    applyFabricTranslation(savedLang);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initTranslation);
+    </script>
+</body>
+</html>

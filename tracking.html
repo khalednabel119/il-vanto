@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking | il vanto</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #C4BCB0;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: #2C365A;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon-wrapper svg {
+            stroke: #fff;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #d4af37;
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Language Switcher - Fixed */
+        .language-switcher {
+            position: relative;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            transition: transform 0.3s;
+        }
+
+        .language-btn.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #2C365A;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            min-width: 140px;
+            margin-top: 5px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .language-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .language-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            text-align: left;
+        }
+
+        .language-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .language-dropdown a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tracking Container */
+        .tracking-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tracking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tracking-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #2C365A;
+        }
+
+        .tracking-header p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .orders-grid {
+            display: grid;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .order-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .order-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-id {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2C365A;
+        }
+
+        .order-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-shipped {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            color: #2C365A;
+            font-weight: 500;
+        }
+
+        .order-items {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .order-items-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2C365A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .item-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tracking-timeline {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2C365A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ddd;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 3px solid #fff;
+            z-index: 1;
+        }
+
+        .timeline-item.active::before {
+            background: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .timeline-item.completed::before {
+            background: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .timeline-status {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .no-orders p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        .no-orders a {
+            display: inline-block;
+            background: #d4af37;
+            color: #000;
+            padding: 12px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #d4af37;
+        }
+
+        .no-orders a:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        .order-card.delivered .delete-btn {
+            display: inline-block;
+        }
+
+        /* Delete Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .modal-icon.success {
+            color: #28a745;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2C365A;
+        }
+
+        .modal-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            min-width: 120px;
+        }
+
+        .modal-btn-primary {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .modal-btn-primary:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-secondary {
+            background: #e9ecef;
+            color: #333;
+            border: 2px solid #dee2e6;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #dee2e6;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-confirm {
+            background: #28a745;
+            color: #fff;
+            flex: 1;
+        }
+
+        .modal-btn-confirm:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="index.html" class="logo" data-translate="logo">il vanto</a>
+        <nav class="nav-links">
+            <a href="index.html" data-translate="nav_home">Home</a>
+            <a href="cart.html" data-translate="nav_cart">Cart</a>
+            <a href="tracking.html" style="color: #d4af37; font-weight: 600;" data-translate="nav_tracking">Tracking</a>
+            <div class="language-switcher">
+                <button class="language-btn" id="languageBtn">
+                    <span>🌐 EN</span>
+                    <i class="dropdown-arrow">▼</i>
+                </button>
+                <div class="language-dropdown" id="languageDropdown">
+                    <a href="#" data-lang="en">English</a>
+                    <a href="#" data-lang="ar">العربية</a>
+                    <a href="#" data-lang="zh">中文</a>
+                </div>
+            </div>
+        </nav>
+        <div class="nav-icons">
+            <div class="cart-icon-wrapper" onclick="window.location.href='cart.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="tracking-container">
+    <div class="tracking-header">
+        <h1 data-translate="tracking_title">Track Your Order</h1>
+        <p data-translate="tracking_subtitle">Real-time delivery status updates</p>
+    </div>
+
+    <div id="orders-container">
+        <!-- Orders will be dynamically loaded here -->
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-icon">🗑️</div>
+        <div class="modal-title" data-translate="delete_confirm_title">Delete Order</div>
+        <div class="modal-message" data-translate="delete_confirm_message">Are you sure you want to delete this order? This action cannot be undone.</div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-secondary" onclick="closeDeleteModal()" data-translate="cancel">Cancel</button>
+            <button class="modal-btn modal-btn-primary" onclick="confirmDeleteOrder()" data-translate="delete">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message Modal -->
+<div id="successModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-icon success">✅</div>
+        <div class="modal-title" data-translate="delete_success_title">Order Deleted</div>
+        <div class="modal-message" data-translate="delete_success_message">Your order has been successfully deleted.</div>
+        <button class="modal-btn modal-btn-confirm" onclick="closeSuccessModal()" data-translate="ok">OK</button>
+    </div>
+</div>
+
+<script>
+// ================================
+// TRANSLATION SYSTEM FOR TRACKING PAGE
+// ================================
+
+const trackingTranslations = {
+    en: {
+        logo: "il vanto",
+        nav_home: "Home",
+        nav_cart: "Cart",
+        nav_tracking: "Tracking",
+        tracking_title: "Track Your Order",
+        tracking_subtitle: "Real-time delivery status updates",
+        no_orders: "No orders found. Start shopping!",
+        continue_shopping: "Continue Shopping",
+        order_placed: "Order Placed",
+        processing: "Processing",
+        shipped: "Shipped",
+        delivered: "Delivered",
+        order_date: "Order Date",
+        total_amount: "Total Amount",
+        payment_method: "Payment Method",
+        shipping_address: "Shipping Address",
+        items_ordered: "Items Ordered",
+        delivery_status: "Delivery Status",
+        delete_order: "🗑️ Delete Order",
+        delete_confirm_title: "Delete Order",
+        delete_confirm_message: "Are you sure you want to delete this order? This action cannot be undone.",
+        delete_success_title: "Order Deleted",
+        delete_success_message: "Your order has been successfully deleted.",
+        cancel: "Cancel",
+        delete: "Delete",
+        ok: "OK",
+        back_to_tracking: "Back to Tracking",
+        order_not_found: "Order #{orderId} not found."
+    },
+    ar: {
+        logo: "il vanto",
+        nav_home: "الرئيسية",
+        nav_cart: "عربة التسوق",
+        nav_tracking: "تتبع الطلب",
+        tracking_title: "تتبع طلبك",
+        tracking_subtitle: "تحديثات حالة التوصيل في الوقت الحقيقي",
+        no_orders: "لم يتم العثور على طلبات. ابدأ التسوق!",
+        continue_shopping: "مواصلة التسوق",
+        order_placed: "تم تقديم الطلب",
+        processing: "قيد المعالجة",
+        shipped: "تم الشحن",
+        delivered: "تم التوصيل",
+        order_date: "تاريخ الطلب",
+        total_amount: "المبلغ الإجمالي",
+        payment_method: "طريقة الدفع",
+        shipping_address: "عنوان الشحن",
+        items_ordered: "المنتجات المطلوبة",
+        delivery_status: "حالة التوصيل",
+        delete_order: "🗑️ حذف الطلب",
+        delete_confirm_title: "حذف الطلب",
+        delete_confirm_message: "هل أنت متأكد أنك تريد حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.",
+        delete_success_title: "تم حذف الطلب",
+        delete_success_message: "تم حذف طلبك بنجاح.",
+        cancel: "إلغاء",
+        delete: "حذف",
+        ok: "موافق",
+        back_to_tracking: "العودة للتتبع",
+        order_not_found: "الطلب #{orderId} غير موجود."
+    },
+    zh: {
+        logo: "il vanto",
+        nav_home: "首页",
+        nav_cart: "购物车",
+        nav_tracking: "订单跟踪",
+        tracking_title: "跟踪您的订单",
+        tracking_subtitle: "实时配送状态更新",
+        no_orders: "未找到订单。开始购物吧！",
+        continue_shopping: "继续购物",
+        order_placed: "订单已下",
+        processing: "处理中",
+        shipped: "已发货",
+        delivered: "已送达",
+        order_date: "订单日期",
+        total_amount: "总金额",
+        payment_method: "支付方式",
+        shipping_address: "配送地址",
+        items_ordered: "订购商品",
+        delivery_status: "配送状态",
+        delete_order: "🗑️ 删除订单",
+        delete_confirm_title: "删除订单",
+        delete_confirm_message: "您确定要删除此订单吗？此操作无法撤销。",
+        delete_success_title: "订单已删除",
+        delete_success_message: "您的订单已成功删除。",
+        cancel: "取消",
+        delete: "删除",
+        ok: "确定",
+        back_to_tracking: "返回跟踪",
+        order_not_found: "订单 #{orderId} 未找到。"
+    }
+};
+
+// Apply translation
+function applyTrackingTranslation(lang) {
+    const t = trackingTranslations[lang] || trackingTranslations.en;
+    
+    // Update all elements with data-translate
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Update language button text
+    const langText = document.querySelector('.language-btn span');
+    const langTexts = {
+        en: '🌐 EN',
+        ar: '🌐 عربي',
+        zh: '🌐 中文'
+    };
+    
+    if (langText && langTexts[lang]) {
+        langText.textContent = langTexts[lang];
+    }
+    
+    // Apply RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+        document.querySelectorAll('.modal-content, .detail-item, .order-items').forEach(el => {
+            el.style.textAlign = 'right';
+        });
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+        document.querySelectorAll('.modal-content, .detail-item, .order-items').forEach(el => {
+            el.style.textAlign = 'left';
+        });
+    }
+    
+    // Save selected language
+    localStorage.setItem('preferred-language', lang);
+}
+
+// Toggle dropdown visibility
+function toggleLanguageDropdown() {
+    const dropdown = document.getElementById('languageDropdown');
+    const btn = document.getElementById('languageBtn');
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        btn.classList.remove('active');
+    } else {
+        dropdown.classList.add('show');
+        btn.classList.add('active');
+    }
+}
+
+// Close dropdown when clicking outside
+function closeDropdownOnClickOutside(event) {
+    const dropdown = document.getElementById('languageDropdown');
+    const btn = document.getElementById('languageBtn');
+    
+    if (!dropdown.contains(event.target) && !btn.contains(event.target)) {
+        dropdown.classList.remove('show');
+        btn.classList.remove('active');
+    }
+}
+
+// Initialize language system
+function initLanguageSystem() {
+    // Get elements
+    const languageBtn = document.getElementById('languageBtn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const langLinks = document.querySelectorAll('.language-dropdown a');
+    
+    // Add click event to language button
+    if (languageBtn) {
+        languageBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleLanguageDropdown();
+        });
+    }
+    
+    // Add click events to language links
+    langLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const lang = this.getAttribute('data-lang');
+            applyTrackingTranslation(lang);
+            
+            // Re-render orders with new translation
+            showAllOrders();
+            
+            // Close dropdown after selection
+            languageDropdown.classList.remove('show');
+            languageBtn.classList.remove('active');
+        });
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', closeDropdownOnClickOutside);
+    
+    // Prevent dropdown from closing when clicking inside it
+    if (languageDropdown) {
+        languageDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Load saved language or default to English
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    applyTrackingTranslation(savedLang);
+}
+
+// ================================
+// TRACKING PAGE LOGIC
+// ================================
+
+const State = {
+    user: JSON.parse(localStorage.getItem("ilvanto_session")) || null
+};
+
+function getOrders() {
+    return JSON.parse(localStorage.getItem("ilvanto_orders")) || [];
+}
+
+function formatPrice(p) {
+    return `$${Number(p).toFixed(2)}`;
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    
+    if (currentLang === 'ar') {
+        return date.toLocaleDateString('ar-SA', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else if (currentLang === 'zh') {
+        return date.toLocaleDateString('zh-CN', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else {
+        return date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+}
+
+function getStatusTimeline(status) {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    const t = trackingTranslations[currentLang] || trackingTranslations.en;
+    
+    const statuses = [
+        { name: t.order_placed, key: 'placed', completed: true },
+        { name: t.processing, key: 'processing', completed: status !== 'pending' },
+        { name: t.shipped, key: 'shipped', completed: status === 'shipped' || status === 'delivered' },
+        { name: t.delivered, key: 'delivered', completed: status === 'delivered' }
+    ];
+    return statuses;
+}
+
+function renderOrderCard(order) {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    const t = trackingTranslations[currentLang] || trackingTranslations.en;
+    
+    const timeline = getStatusTimeline(order.status);
+    const timelineHTML = timeline.map((item, index) => `
+        <div class="timeline-item ${item.completed ? 'completed' : ''} ${order.status === 'pending' && index === 0 ? 'active' : ''}" data-step="${index}">
+            <div class="timeline-date">${index === 0 ? formatDate(order.date) : ''}</div>
+            <div class="timeline-status">${item.name}</div>
+        </div>
+    `).join('');
+
+    return `
+        <div class="order-card ${order.status}">
+            <div class="order-header">
+                <div class="order-id">Order #${order.id.substring(0, 8)}</div>
+                <div class="order-status status-${order.status}">
+                    ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                </div>
+            </div>
+
+            <div class="order-details">
+                <div class="detail-item">
+                    <div class="detail-label">${t.order_date}</div>
+                    <div class="detail-value">${formatDate(order.date)}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">${t.total_amount}</div>
+                    <div class="detail-value">${formatPrice(order.total)}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">${t.payment_method}</div>
+                    <div class="detail-value">${order.paymentMethod}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">${t.shipping_address}</div>
+                    <div class="detail-value">${order.address}, ${order.governorate}, ${order.country}</div>
+                </div>
+            </div>
+
+            <div class="order-items">
+                <div class="order-items-title">${t.items_ordered}</div>
+                <ul class="item-list">
+                    ${order.items.map(item => `
+                        <li>
+                            <span>${item.title} (x${item.qty || 1})</span>
+                            <span>${formatPrice(item.price * (item.qty || 1))}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+
+            <div class="tracking-timeline">
+                <div class="timeline-title">${t.delivery_status}</div>
+                <div class="timeline">
+                    ${timelineHTML}
+                </div>
+            </div>
+
+            <button class="delete-btn" data-order-id="${order.id}">${t.delete_order}</button>
+        </div>
+    `;
+}
+
+function displayOrders(orders) {
+    const container = document.getElementById('orders-container');
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    const t = trackingTranslations[currentLang] || trackingTranslations.en;
+
+    if (orders.length === 0) {
+        container.innerHTML = `
+            <div class="no-orders">
+                <p>${t.no_orders}</p>
+                <a href="index.html">${t.continue_shopping}</a>
+            </div>
+        `;
+        return;
+    }
+
+    // Sort orders by date (newest first)
+    orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    container.innerHTML = `
+        <div class="orders-grid">
+            ${orders.map(order => renderOrderCard(order)).join('')}
+        </div>
+    `;
+
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const orderId = e.target.dataset.orderId;
+            deleteOrder(orderId);
+        });
+    });
+}
+
+function showAllOrders() {
+    const allOrders = getOrders();
+    
+    // Filter by current user if logged in
+    const userOrders = State.user 
+        ? allOrders.filter(order => order.user === State.user.name || order.user === 'Guest')
+        : allOrders.filter(order => order.user === 'Guest');
+
+    displayOrders(userOrders);
+}
+
+let orderIdToDelete = null;
+
+function deleteOrder(orderId) {
+    let allOrders = getOrders();
+    const orderIndex = allOrders.findIndex(order => order.id === orderId);
+    
+    if (orderIndex !== -1) {
+        const order = allOrders[orderIndex];
+        
+        // Only allow deletion if order is delivered
+        if (order.status !== 'delivered') {
+            alert('You can only delete delivered orders.');
+            return;
+        }
+        
+        // Show delete confirmation modal
+        orderIdToDelete = orderId;
+        document.getElementById('deleteModal').classList.add('active');
+    }
+}
+
+function confirmDeleteOrder() {
+    if (orderIdToDelete) {
+        let allOrders = getOrders();
+        const orderIndex = allOrders.findIndex(order => order.id === orderIdToDelete);
+        
+        if (orderIndex !== -1) {
+            allOrders.splice(orderIndex, 1);
+            localStorage.setItem("ilvanto_orders", JSON.stringify(allOrders));
+            
+            closeDeleteModal();
+            showSuccessModal();
+            
+            // Refresh display after a short delay
+            setTimeout(() => {
+                closeSuccessModal();
+                showAllOrders();
+            }, 2000);
+        }
+    }
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('active');
+    orderIdToDelete = null;
+}
+
+function showSuccessModal() {
+    document.getElementById('successModal').classList.add('active');
+}
+
+function closeSuccessModal() {
+    document.getElementById('successModal').classList.remove('active');
+}
+
+// Close modals when clicking outside
+document.addEventListener('click', (e) => {
+    const deleteModal = document.getElementById('deleteModal');
+    const successModal = document.getElementById('successModal');
+    
+    if (e.target === deleteModal) {
+        closeDeleteModal();
+    }
+    if (e.target === successModal) {
+        closeSuccessModal();
+    }
+});
+
+// Auto-advance order statuses
+function autoAdvanceStatuses() {
+    setInterval(() => {
+        const allOrders = getOrders();
+        let updated = false;
+
+        allOrders.forEach(order => {
+            if (order.status === 'pending') {
+                order.status = 'processing';
+                updated = true;
+            } else if (order.status === 'processing') {
+                // Random chance to advance to shipped (simulate real processing)
+                if (Math.random() > 0.7) {
+                    order.status = 'shipped';
+                    updated = true;
+                }
+            } else if (order.status === 'shipped') {
+                // Random chance to advance to delivered
+                if (Math.random() > 0.8) {
+                    order.status = 'delivered';
+                    updated = true;
+                }
+            }
+        });
+
+        if (updated) {
+            localStorage.setItem("ilvanto_orders", JSON.stringify(allOrders));
+            showAllOrders();
+        }
+    }, 10000); // Every 10 seconds
+}
+
+// Update cart count
+function updateCartCount() {
+    const badge = document.getElementById("cart-count");
+    if (!badge) return;
+
+    const cart = JSON.parse(localStorage.getItem("ilvanto_cart")) || [];
+    const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    badge.textContent = count;
+}
+
+// Initialize tracking page
+function initTracking() {
+    // Initial load - show all user's orders
+    showAllOrders();
+
+    // Start auto-advancing statuses
+    autoAdvanceStatuses();
+    
+    // Update cart count
+    updateCartCount();
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize language system
+    initLanguageSystem();
+    
+    // Initialize tracking
+    initTracking();
+});
+</script>
+</body>
+</html>

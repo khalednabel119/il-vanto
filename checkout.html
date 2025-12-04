@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - il vanto</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600">
+    <style>
+    /* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #C4BCB0;
+    color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main container */
+.checkout-container {
+    max-width: 470px;
+    margin: 0 auto;
+    background: #2C365A;
+    padding: 20px 18px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #EEE8DF;
+}
+
+/* Headings */
+h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 25px 0 15px;
+    color: #fff;
+}
+
+/* Back Button */
+.back-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/* Inputs + Select */
+.input-field,
+select {
+    width: 100%;
+    padding: 12px 4px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background:#EEE8DF;
+    color: #000000;
+    font-size: 15px;
+}
+
+.input-field:focus,
+select:focus {
+    border-color: #4f9cff;
+    background: #EEE8DF;
+    outline: none;
+    color: #000000;
+}
+
+/* Labels */
+.checkbox-label,
+.radio-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.checkbox-label input,
+.radio-label input {
+    margin-right: 10px;
+}
+
+/* Phone + help icon */
+.phone-field-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.help-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* Shipping box */
+.shipping-box {
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    background: #1c1c1c;
+}
+
+/* Payment options */
+.payment-option {
+    padding: 12px;
+    border: 1px solid #333;
+    background: #1b1b1b;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.payment-option input {
+    margin-right: 10px;
+}
+
+.payment-option:has(input:checked) {
+    background: #243447;
+    border-color: #4f9cff;
+}
+
+/* Logos */
+.payment-logos img {
+    height: 18px;
+    filter: none;
+}
+
+/* Payment info box */
+.payment-info-box {
+    background: #111;
+    padding: 12px;
+    font-size: 13px;
+    border: 1px solid #333;
+    border-top: 0;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.payment-illustration svg {
+    stroke: #bbb;
+}
+
+/* Product list */
+.product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.product-image-wrapper {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    margin-right: 12px;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.product-image-wrapper .qty {
+    position: absolute;
+    background: #4f9cff;
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 4px;
+    border-radius: 50%;
+    top: -6px;
+    right: -6px;
+    border: 1px solid #000;
+}
+
+.product-name {
+    flex: 1;
+    font-size: 15px;
+    color: #fff;
+}
+
+.product-price {
+    font-weight: 600;
+    font-size: 15px;
+    color: #fff;
+    margin-right: 12px;
+}
+
+/* Summary rows */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 15px;
+    color: #ccc;
+}
+
+.summary-row.total {
+    font-weight: 600;
+    font-size: 18px;
+    border-top: 1px solid #333;
+    margin-top: 15px;
+    padding-top: 10px;
+    color: #fff;
+}
+
+/* Discount */
+.discount-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* Apply button */
+.apply-btn {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    background: #000;
+}
+
+/* Pay now button */
+.pay-now-btn {
+    background: #C4BCB0;
+    color: #000000;
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pay-now-btn:hover {
+    background: #b0a99d;
+    transform: translateY(-2px);
+}
+
+.pay-now-btn:active {
+    transform: translateY(0);
+}
+
+/* Empty cart */
+.empty {
+    text-align: center;
+    padding: 40px 0;
+    color: #aaa;
+    font-size: 15px;
+}
+
+.empty a {
+    display: inline-block;
+    background: #4f9cff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+/* Confirmation screen */
+#confirmationScreen {
+    max-width: 470px;
+    margin: 50px auto;
+    background: #2C365A;
+    padding: 40px 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+}
+#confirmationScreen h2 {
+    color: #4f9cff;
+    margin-bottom: 15px;
+}
+#confirmationScreen p {
+    margin: 10px 0;
+    color: #fff;
+}
+#confirmationScreen a {
+    background: #C4BCB0;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Language Switcher - fixed */
+.language-switcher {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+}
+.language-btn {
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+.language-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 4px;
+    min-width: 120px;
+}
+.language-dropdown.show {
+    display: block;
+}
+.language-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+}
+.language-dropdown a:last-child {
+    border-bottom: none;
+}
+.language-dropdown a:hover {
+    background: #333;
+}
+
+/* Toast message */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Remove button style */
+.remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-btn:hover {
+    background: #c82333;
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.loading-spinner {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.loading-spinner p {
+    margin-top: 15px;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay">
+    <div class="loading-spinner">
+        <div style="font-size: 40px;">⏳</div>
+        <p>Processing your order...</p>
+    </div>
+</div>
+
+<!-- Language Switcher -->
+<div class="language-switcher">
+    <button class="language-btn">
+        <span>🌐 EN</span>
+        <i>▼</i>
+    </button>
+    <div class="language-dropdown">
+        <a href="#" data-lang="en">English</a>
+        <a href="#" data-lang="ar">العربية</a>
+        <a href="#" data-lang="zh">中文</a>
+    </div>
+</div>
+
+<!-- Checkout Container -->
+<div class="checkout-container">
+    <a href="cart.html" class="back-btn" data-translate="back_to_cart">← Back to Cart</a>
+
+    <form id="checkoutForm">
+        <h2 data-translate="contact">Contact</h2>
+        <input type="email" id="email" class="input-field" placeholder="Email" required data-translate-placeholder="email">
+        <label class="checkbox-label"><input type="checkbox" checked> <span data-translate="email_news">Email me with news and offers</span></label>
+
+        <h2 data-translate="delivery">Delivery</h2>
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <input id="firstName" class="input-field" placeholder="First Name" required data-translate-placeholder="first_name" style="flex: 1;">
+            <input id="lastName" class="input-field" placeholder="Last Name" required data-translate-placeholder="last_name" style="flex: 1;">
+        </div>
+
+        <select id="country" class="input-field" required>
+            <option value="" disabled selected data-translate="country_region">Country / Region</option>
+            <option value="Egypt">Egypt</option>
+            <option value="KAS">KAS</option>
+        </select>
+        <select id="governorate" class="input-field" required>
+            <option value="" disabled selected data-translate="governorate">Governorate</option>
+            <option value="Ismailia">Ismailia</option>
+            <option value="Cairo">Cairo</option>
+            <option value="Giza">Giza</option>
+            <option value="Makkah">Makkah</option>
+        </select>
+
+        <input id="address" class="input-field" placeholder="Address" required data-translate-placeholder="address">
+        <input id="apartment" class="input-field" placeholder="Apartment, suite, etc. (optional)" data-translate-placeholder="apartment">
+        <input id="postalCode" class="input-field" placeholder="Postal code (optional)" data-translate-placeholder="postal_code">
+
+        <div class="phone-field-wrapper">
+            <input type="tel" id="phone" class="input-field" placeholder="Phone" required data-translate-placeholder="phone">
+            <div class="help-icon" title="Phone number for delivery" data-translate-title="phone_help">?</div>
+        </div>
+
+        <label class="checkbox-label"><input type="checkbox" id="saveInfo"> <span data-translate="save_info">Save this information for next time</span></label>
+        <label class="checkbox-label"><input type="checkbox" id="textNews"> <span data-translate="text_news">Text me with news and offers</span></label>
+
+        <h2 data-translate="shipping_method">Shipping method</h2>
+        <div class="shipping-box"><span data-translate="standard">Standard</span> <b id="ship-fee-display">$15.00</b></div>
+
+        <h2 data-translate="payment">Payment</h2>
+        <label class="payment-option">
+            <input type="radio" name="pay" value="card" checked>
+            <span data-translate="pay_via">Pay via (Debit/Credit cards/Wallets/Installments)</span>
+            <div class="payment-logos">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+            </div>
+        </label>
+
+        <div class="payment-info-box">
+            <div class="payment-illustration">
+                <svg viewBox="0 0 60 50" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="35" height="25" rx="2" fill="none" stroke="#999" stroke-width="1.5"/>
+                    <line x1="10" y1="18" x2="45" y2="18" stroke="#999" stroke-width="1"/>
+                    <path d="M 48 22 L 53 22 M 53 22 L 50 20 M 53 22 L 50 24" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <span data-translate="payment_info">After clicking "Pay now", you will be redirected to Pay via (Debit/Credit cards/Wallets/Installments) to complete your purchase securely.</span>
+        </div>
+
+        <label class="payment-option">
+            <input type="radio" name="pay" value="cod"> <span data-translate="cod">Cash on Delivery (COD)</span>
+        </label>
+
+        <h2 data-translate="billing_address">Billing address</h2>
+        <label class="radio-label" style="border: 1px solid #2874f0; padding: 10px; border-radius: 5px; margin-bottom: 12px;">
+            <input type="radio" name="billing" value="same" checked>
+            <span data-translate="same_address">Same as shipping address</span>
+        </label>
+        <label class="radio-label" style="border: 1px solid #d9d9d9; padding: 10px; border-radius: 5px; margin-bottom: 12px;">
+            <input type="radio" name="billing" value="different">
+            <span data-translate="different_address">Use a different billing address</span>
+        </label>
+
+        <h2 data-translate="order_summary">Order Summary</h2>
+        <div id="product-list"></div>
+
+        <div class="discount-row">
+            <input type="text" id="discountCode" placeholder="Discount code or gift card" class="input-field" style="margin-bottom:0;" data-translate-placeholder="discount_code">
+            <button type="button" id="applyDiscountBtn" class="apply-btn" data-translate="apply">Apply</button>
+        </div>
+
+        <div class="summary-row"><span data-translate="subtotal">Subtotal</span><span id="subtotal">$0.00</span></div>
+        <div class="summary-row"><span data-translate="shipping">Shipping</span><span id="ship">$15.00</span></div>
+        <div class="summary-row total"><span data-translate="total">Total</span><span id="total">$0.00</span></div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 20px;" data-translate="taxes_info">Including $0.00 in taxes</div>
+
+        <button type="button" class="pay-now-btn" id="payNowBtn" data-translate="pay_now">Pay now</button>
+    </form>
+</div>
+
+<!-- Confirmation Screen -->
+<div id="confirmationScreen">
+    <h2 data-translate="payment_accepted">✅ Payment Accepted!</h2>
+    <p data-translate="thank_you">Thank you for your purchase.</p>
+    <p data-translate="order_processing">Your order is now being processed.</p>
+    <p data-translate="tracking_number">Tracking Number: <b id="trackingNumber"></b></p>
+    <p style="color: #4f9cff; margin-top: 20px;" id="redirectMessage">Redirecting to tracking page...</p>
+</div>
+
+<script>
+// ================================
+// TRANSLATION SYSTEM
+// ================================
+
+const checkoutTranslations = {
+    en: {
+        back_to_cart: "← Back to Cart",
+        contact: "Contact",
+        email: "Email",
+        email_news: "Email me with news and offers",
+        delivery: "Delivery",
+        first_name: "First Name",
+        last_name: "Last Name",
+        country_region: "Country / Region",
+        governorate: "Governorate",
+        address: "Address",
+        apartment: "Apartment, suite, etc. (optional)",
+        postal_code: "Postal code (optional)",
+        phone: "Phone",
+        phone_help: "Phone number for delivery",
+        save_info: "Save this information for next time",
+        text_news: "Text me with news and offers",
+        shipping_method: "Shipping method",
+        standard: "Standard",
+        payment: "Payment",
+        pay_via: "Pay via (Debit/Credit cards/Wallets/Installments)",
+        payment_info: "After clicking 'Pay now', you will be redirected to Pay via (Debit/Credit cards/Wallets/Installments) to complete your purchase securely.",
+        cod: "Cash on Delivery (COD)",
+        billing_address: "Billing address",
+        same_address: "Same as shipping address",
+        different_address: "Use a different billing address",
+        order_summary: "Order Summary",
+        discount_code: "Discount code or gift card",
+        apply: "Apply",
+        subtotal: "Subtotal",
+        shipping: "Shipping",
+        total: "Total",
+        taxes_info: "Including $0.00 in taxes",
+        pay_now: "Pay now",
+        payment_accepted: "✅ Payment Accepted!",
+        thank_you: "Thank you for your purchase.",
+        order_processing: "Your order is now being processed.",
+        tracking_number: "Tracking Number:",
+        track_order: "Tracking your order"
+    },
+    ar: {
+        back_to_cart: "← العودة إلى السلة",
+        contact: "الاتصال",
+        email: "البريد الإلكتروني",
+        email_news: "أرسل لي أخبار وعروض عبر البريد الإلكتروني",
+        delivery: "التوصيل",
+        first_name: "الاسم الأول",
+        last_name: "اسم العائلة",
+        country_region: "الدولة / المنطقة",
+        governorate: "المحافظة",
+        address: "العنوان",
+        apartment: "شقة، جناح، إلخ (اختياري)",
+        postal_code: "الرمز البريدي (اختياري)",
+        phone: "الهاتف",
+        phone_help: "رقم الهاتف للتوصيل",
+        save_info: "احفظ هذه المعلومات للمرة القادمة",
+        text_news: "أرسل لي أخبار وعروض عبر الرسائل النصية",
+        shipping_method: "طريقة الشحن",
+        standard: "عادي",
+        payment: "الدفع",
+        pay_via: "الدفع عبر (بطاقات الدفع/المحافظ/التقسيط)",
+        payment_info: "بعد النقر على 'ادفع الآن'، سيتم توجيهك إلى الدفع عبر (بطاقات الدفع/المحافظ/التقسيط) لإكمال عملية الشراء بشكل آمن.",
+        cod: "الدفع عند الاستلام",
+        billing_address: "عنوان الفواتير",
+        same_address: "نفس عنوان الشحن",
+        different_address: "استخدم عنوان فواتير مختلف",
+        order_summary: "ملخص الطلب",
+        discount_code: "كود الخصم أو بطاقة الهدية",
+        apply: "تطبيق",
+        subtotal: "المجموع الجزئي",
+        shipping: "الشحن",
+        total: "الإجمالي",
+        taxes_info: "بما في ذلك $0.00 ضرائب",
+        pay_now: "ادفع الآن",
+        payment_accepted: "✅ تم قبول الدفع!",
+        thank_you: "شكراً لشرائك.",
+        order_processing: "طلبك قيد المعالجة الآن.",
+        tracking_number: "رقم التتبع:",
+        track_order: "تتبع طلبك"
+    },
+    zh: {
+        back_to_cart: "← 返回购物车",
+        contact: "联系信息",
+        email: "电子邮件",
+        email_news: "通过电子邮件发送新闻和优惠",
+        delivery: "配送",
+        first_name: "名字",
+        last_name: "姓氏",
+        country_region: "国家/地区",
+        governorate: "省份",
+        address: "地址",
+        apartment: "公寓、套房等（可选）",
+        postal_code: "邮政编码（可选）",
+        phone: "电话",
+        phone_help: "配送电话号码",
+        save_info: "保存此信息以备下次使用",
+        text_news: "通过短信发送新闻和优惠",
+        shipping_method: "配送方式",
+        standard: "标准",
+        payment: "支付",
+        pay_via: "通过（借记卡/信用卡/钱包/分期付款）支付",
+        payment_info: "点击'立即支付'后，您将被重定向到通过（借记卡/信用卡/钱包/分期付款）安全完成购买。",
+        cod: "货到付款",
+        billing_address: "账单地址",
+        same_address: "与配送地址相同",
+        different_address: "使用不同的账单地址",
+        order_summary: "订单摘要",
+        discount_code: "折扣码或礼品卡",
+        apply: "应用",
+        subtotal: "小计",
+        shipping: "运费",
+        total: "总计",
+        taxes_info: "包括 $0.00 税费",
+        pay_now: "立即支付",
+        payment_accepted: "✅ 支付已接受！",
+        thank_you: "感谢您的购买。",
+        order_processing: "您的订单正在处理中。",
+        tracking_number: "跟踪号码：",
+        track_order: "跟踪您的订单"
+    }
+};
+
+// Apply translation
+function applyCheckoutTranslation(lang) {
+    const t = checkoutTranslations[lang] || checkoutTranslations.en;
+    
+    // Translate elements with data-translate
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // Translate placeholders
+    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-translate-placeholder');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+    
+    // Translate title attributes
+    document.querySelectorAll('[data-translate-title]').forEach(el => {
+        const key = el.getAttribute('data-translate-title');
+        if (t[key]) {
+            el.title = t[key];
+        }
+    });
+    
+    // Update language button
+    updateCheckoutLanguageButton(lang);
+    
+    // RTL for Arabic
+    if (lang === 'ar') {
+        document.body.style.direction = 'rtl';
+        document.body.style.textAlign = 'right';
+        document.querySelectorAll('.input-field, select').forEach(el => {
+            el.style.textAlign = 'right';
+        });
+    } else {
+        document.body.style.direction = 'ltr';
+        document.body.style.textAlign = 'left';
+        document.querySelectorAll('.input-field, select').forEach(el => {
+            el.style.textAlign = 'left';
+        });
+    }
+}
+
+// Update language button
+function updateCheckoutLanguageButton(lang) {
+    const button = document.querySelector('.language-btn span');
+    const langTexts = {
+        en: '🌐 EN',
+        ar: '🌐 عربي',
+        zh: '🌐 中文'
+    };
+    
+    if (button && langTexts[lang]) {
+        button.textContent = langTexts[lang];
+    }
+}
+
+// Initialize translation
+function initCheckoutTranslation() {
+    // Language switcher events
+    document.querySelectorAll('.language-dropdown a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            applyCheckoutTranslation(lang);
+            
+            // Close dropdown
+            document.querySelector('.language-dropdown').classList.remove('show');
+        });
+    });
+    
+    // Toggle dropdown
+    const languageBtn = document.querySelector('.language-btn');
+    const languageDropdown = document.querySelector('.language-dropdown');
+    
+    if (languageBtn) {
+        languageBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown on outside click
+        document.addEventListener('click', function() {
+            languageDropdown.classList.remove('show');
+        });
+        
+        // Prevent closing when clicking inside dropdown
+        languageDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Load saved language
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    applyCheckoutTranslation(savedLang);
+}
+
+// ================================
+// CHECKOUT FUNCTIONALITY
+// ================================
+
+function loadCheckoutItems() {
+    let cart = JSON.parse(localStorage.getItem("ilvanto_cart")) || [];
+    const productList = document.getElementById("product-list");
+    const subtotalElement = document.getElementById("subtotal");
+    const totalElement = document.getElementById("total");
+    const shippingFee = 15;
+
+    productList.innerHTML = "";
+
+    if (cart.length === 0) {
+        productList.innerHTML = `<div class="empty">Your cart is empty.</div>`;
+        subtotalElement.textContent = "$0.00";
+        totalElement.textContent = "$0.00";
+        document.getElementById("payNowBtn").disabled = true;
+        return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+        const quantity = item.qty || 1;
+        const itemTotal = item.price * quantity;
+        subtotal += itemTotal;
+
+        productList.innerHTML += `
+            <div class="product-item" data-index="${index}">
+                <div class="product-image-wrapper">
+                    <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/45?text=No+Image'">
+                    <span class="qty">${quantity}</span>
+                </div>
+                <div class="product-name">${item.title}</div>
+                <div class="product-price">$${itemTotal.toFixed(2)}</div>
+                <button class="remove-btn" data-index="${index}">×</button>
+            </div>
+        `;
+    });
+
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+    totalElement.textContent = `$${(subtotal + shippingFee).toFixed(2)}`;
+    document.getElementById("payNowBtn").disabled = false;
+}
+
+function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("ilvanto_cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("ilvanto_cart", JSON.stringify(cart));
+    loadCheckoutItems();
+}
+
+function showToast(message) {
+    // Remove existing toast
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // Create new toast
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+function showLoading() {
+    document.querySelector('.loading-overlay').classList.add('active');
+}
+
+function hideLoading() {
+    document.querySelector('.loading-overlay').classList.remove('active');
+}
+
+function handleCheckout() {
+    const form = document.getElementById("checkoutForm");
+
+    // 1️⃣ Check if required fields are valid
+    if (!form.checkValidity()) {
+        showToast("Please fill in all required fields");
+        form.reportValidity();
+        return;
+    }
+
+    // 2️⃣ Check if cart is empty
+    const cart = JSON.parse(localStorage.getItem("ilvanto_cart")) || [];
+    if (cart.length === 0) {
+        showToast("Your cart is empty");
+        return;
+    }
+
+    // 3️⃣ Get all form data using IDs
+    const email = document.getElementById("email").value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const country = document.getElementById("country").value;
+    const governorate = document.getElementById("governorate").value;
+    const address = document.getElementById("address").value;
+    const phone = document.getElementById("phone").value;
+    
+    // Check if required fields are filled
+    if (!email || !firstName || !lastName || !country || !governorate || !address || !phone) {
+        showToast("Please fill in all required fields");
+        return;
+    }
+
+    // Get payment method
+    const paymentMethod = document.querySelector('input[name="pay"]:checked').value;
+    
+    // Calculate totals
+    let subtotal = 0;
+    cart.forEach(item => {
+        subtotal += item.price * (item.qty || 1);
+    });
+    const shippingFee = 15.00;
+    const total = subtotal + shippingFee;
+
+    // Get user info
+    const user = JSON.parse(localStorage.getItem("ilvanto_session")) || { name: "Guest" };
+
+    // Create order object
+    const trackingNumber = 'ILV' + Math.floor(100000 + Math.random() * 900000);
+    const order = {
+        id: Date.now().toString(),
+        trackingNumber: trackingNumber,
+        user: user.name || 'Guest',
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        phone: phone,
+        country: country,
+        governorate: governorate,
+        items: cart,
+        subtotal: subtotal,
+        shipping: shippingFee,
+        total: total,
+        date: new Date().toISOString(),
+        paymentMethod: paymentMethod === 'card' ? 'Card' : 'Cash on Delivery',
+        status: 'pending'
+    };
+
+    // Save order to localStorage
+    const orders = JSON.parse(localStorage.getItem("ilvanto_orders")) || [];
+    orders.push(order);
+    localStorage.setItem("ilvanto_orders", JSON.stringify(orders));
+    
+    // Save tracking number for tracking page
+    localStorage.setItem("last_order_tracking", trackingNumber);
+    localStorage.setItem("last_order_id", order.id);
+
+    // Show loading
+    showLoading();
+    
+    // Simulate processing delay
+    setTimeout(() => {
+        hideLoading();
+        
+        // Show confirmation screen
+        document.getElementById("trackingNumber").textContent = trackingNumber;
+        document.querySelector(".checkout-container").style.display = "none";
+        document.getElementById("confirmationScreen").style.display = "block";
+        
+        // Clear cart
+        localStorage.removeItem("ilvanto_cart");
+        
+        // Redirect to tracking page after 3 seconds
+        setTimeout(() => {
+            window.location.href = "tracking.html";
+        }, 3000);
+    }, 1500);
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize translation
+    initCheckoutTranslation();
+    
+    // Load cart items
+    loadCheckoutItems();
+    
+    // Add event listener for remove buttons
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("remove-btn")) {
+            const index = e.target.getAttribute("data-index");
+            removeItem(index);
+        }
+    });
+    
+    // Add event listener for checkout button
+    const payNowBtn = document.getElementById("payNowBtn");
+    if (payNowBtn) {
+        payNowBtn.addEventListener("click", handleCheckout);
+    }
+    
+    // Add event listener for apply discount button
+    const applyDiscountBtn = document.getElementById("applyDiscountBtn");
+    if (applyDiscountBtn) {
+        applyDiscountBtn.addEventListener("click", function() {
+            const discountCode = document.getElementById("discountCode").value;
+            if (discountCode) {
+                showToast("Discount code applied!");
+            } else {
+                showToast("Please enter a discount code");
+            }
+        });
+    }
+    
+    // Add event listeners for required fields
+    const requiredFields = ['email', 'firstName', 'lastName', 'country', 'governorate', 'address', 'phone'];
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.borderColor = '#dc3545';
+                } else {
+                    this.style.borderColor = '#333';
+                }
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
