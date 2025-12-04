@@ -8,7 +8,7 @@ const productsData = [
         category: "mens",
         price: 189.00,
         oldPrice: 250.00,
-        image: "images/[1].jpg",
+        image: "[1].jpg",
         description: "DAZY Men's Solid Color Raglan Sleeve Zipper Placket Casual Hoodie, Autumn.",
         tags: ["trending", "sale"],
         rating: 4.8
